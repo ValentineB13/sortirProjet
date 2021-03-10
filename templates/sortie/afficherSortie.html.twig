@@ -1,0 +1,121 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    afficher une sortie
+{% endblock %}
+
+{% block main %}
+
+<section class="contact_section layout_padding mt-0 pt-5">
+    <div class="container">
+
+        <div class="row mb-2">
+            {% set i = 0 %}
+            {%  for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} mx-auto" role="alert">
+                        {{ message }}
+                    </div>
+                {%  endfor %}
+            {%  endfor %}
+        </div>
+
+
+        <div class="heading_container">
+            <h2>{{ sortie.nom }}</h2>
+            <h5>détails de la sortie</h5>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-10 col-sm-10 col-md-12 col-lg-6">
+                    <div class="row">
+                        <div class="col-6">Organisateur : </div>
+                        <div class="col-6">{# <a href="{{ path('/', {'id': sortie.membresInscrits.id }) }}"> #}{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom }}</a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Etat : </div>
+                        <div class="col-6">{{ sortie.etat.libelle }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Date de la sortie : </div>
+                        <div class="col-6">{{ sortie.dateDebut|date("d/m/Y") }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Date limite d'inscriptions : </div>
+                        <div class="col-6">{{ sortie.dateCloture|date("d/m/Y") }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Nombre de places : </div>
+                        <div class="col-6">{{ sortie.nbInscriptionsMax}} place(s)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Durée : </div>
+                        <div class="col-6">{{ sortie.duree }} heure(s) </div>
+                    </div>
+                    <div class="row">
+                        {% if sortie.descriptionInfos is not null %}
+                            <div class="col-6">Informations complémentaires : </div>
+                            <div class="col-6">{{ sortie.descriptionInfos }}</div>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">Ville organisatrice : </div>
+                        <div class="col-6">{{ sortie.campus.nomCampus }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Lieu : </div>
+                        <div class="col-6">{{ sortie.lieuSortie.nomLieu }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Adresse : </div>
+                        <div class="col-6">{{ sortie.lieuSortie.rue }}, {{ sortie.lieuSortie.ville.nomVille }}, {{ sortie.lieuSortie.ville.codePostal }}</div>
+
+                        <div class="col-6"></div>
+
+                    </div>
+
+
+                    <div class="row mt-5">
+                        <div class="row mx-auto">
+                            <h6 class="font-weight-bold">Liste des participants </h6>
+                        </div>
+                        <table class="table table-striped mt-1 mb-2">
+                            <thead>
+                            <tr>
+                                <th>Pseudo</th>
+                                <th>Nom</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% if sortie.membresInscrits|length is same as(0) %}
+                                <tr>
+                                    <td colspan="2">
+                                        <p>Aucun participant inscrit.</p>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                {% for membreInscrit in sortie.membresInscrits %}
+                                    <tr>
+                                        <td>
+                                            {% if membreInscrit.pseudo is not null %}
+                                                {{ membreInscrit.pseudo }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ membreInscrit.prenom }}  {{ membreInscrit.nom }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+{% endblock %}

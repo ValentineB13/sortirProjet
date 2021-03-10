@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <br>
+    <div class="card">
+
+        <div class="card-header mb-3 align-item-md-center"><h3>Les Villes</h3></div>
+    <br>
+    <div class="card-body">
+    {% for ville in ville %}
+        <ul>
+    <li>{{ ville.nomVille }}, {{ ville.codePostal }}</li>
+    </ul>
+    {% endfor %}
+    </div>
+    </div>
+
+
+
+
+{% endblock %}

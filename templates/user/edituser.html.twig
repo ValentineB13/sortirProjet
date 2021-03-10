@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <br>
+    <h4>Modifier mon profil</h4>
+
+    <br>
+    {{ form_start (editform) }}
+    {{ form_row( editform.pseudo, {'value' : app.user.pseudo}) }}
+    {{ form_row( editform.prenom, {'value' : app.user.prenom}) }}
+    {{ form_row( editform.nom, {'value' : app.user.nom}) }}
+    {{ form_row( editform.email, {'value' : app.user.email}) }}
+    {{ form_row( editform.telephone, {'value' : app.user.telephone}) }}
+    {{ form_row( editform.password) }}
+    {{ form_row( editform.password) }}
+    <button type="submit" class="btn btn-primary">Valider</button>
+    {{ form_end( editform) }}
+
+
+
+
+
+
+{% endblock %}

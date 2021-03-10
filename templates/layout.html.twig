@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" ,content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Titre {% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css">
+    <link rel="stylesheet" href="{{  asset ("css/style.css") }}">
+</head>
+<body>
+<div class="container">
+    <header>
+    <div class="nomSite"><h1></h1></div>
+
+        <video src="{{ asset("img/sortiranime.mp4") }}" type="video/mp4" autoplay muted loop>Sorry your browser does not support videos</video>
+
+        {%  include 'inc/nav.html.twig' %}
+    </header>
+
+
+    <main>
+       {#  {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible{{ label }}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>{{ message }}</strong>
+                </div>
+
+            {% endfor %}
+        {% endfor %}#}
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block main %}{% endblock %}
+    </main>
+    <footer style="text-align: center">
+
+        &copy; {{ "now" | date("Y") }} Sortir.com</footer>
+</div>
+
+</body>
+</html>

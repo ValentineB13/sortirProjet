@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <br>
+    <div class="card border-primary mb-3 align-item-md-center" id="profilCard" style="max-width: 20rem;">
+        <div class="card-header">{{ app.user.pseudo }}</div>
+        <div class="card-body">
+            <h4 class="card-title"></h4>
+            <p class="card-text">
+                Prénom : {{ app.user.prenom}}
+                <br>
+                Nom : {{ app.user.nom }}
+                <br>
+                Email : {{ app.user.email }}
+                <br>
+                Campus : {{ app.user.campus.nomCampus }}
+            </p>
+        </div>
+
+    </div>
+    <a href="{{ path ('edit_user') }}"><button type="button" class="btn btn-primary">Modifier</button></a>
+{% endblock %}

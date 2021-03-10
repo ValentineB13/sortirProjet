@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block main %}
+
+ <H1>Liste des utilisateurs</H1>
+<table class="table">
+    <thead>
+    <th>ID</th>
+    <th>Email<th>
+    <th>Rôles</th>
+    <th>Articles</th>
+    <th>Actions</th>
+    </thead>
+    <tbody>
+    {# Bouce sur les utilisateurs #}
+    {% for user in users %}
+        <tr>
+            <td>{{ app.user.pseudo }}</td>
+            <td>{{ app.user.email }}</td>
+            <td>
+                {% for role in user.roles %}
+               {% if role = "ROLE_USER" %}
+                   Utilisateur
+               {% elseif role = "ROLE_PARTICIPANT" %}
+                   Participant
+               {% elseif role = "ROLE_ORGANISATEUR" %}
+                   Organisateur
+               {% elseif role = "ROLE_ADMIN"%}
+                   Administrateur
+               {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ app.user.inscriptionsSortie |length }}</td>
+            <td><a href="" class="btn btn-warning">Modifier</a></td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="=5>Il n'y a pas d'utilisateurs inscrits"></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

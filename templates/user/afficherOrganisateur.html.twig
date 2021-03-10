@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <div class="card" style="text-align: center">
+        <br>
+        <br>
+        <b>Organisateur de la sortie : </b>{{ sortie.organisateur.nom | upper }}, {{ sortie.organisateur.prenom }}
+        <br>
+        <b>Campus :  </b> {{ sortie.organisateur.campus.nomCampus }}
+
+
+
+        <br>
+        <br>
+
+    </div>
+{% endblock %}

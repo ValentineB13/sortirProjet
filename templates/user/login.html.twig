@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <br>
+    <h2 style="text-align: center">Connexion</h2>
+    <br>
+
+    <form action="#" method="post">
+        <div class="form-group">
+                <input placeholder="Pseudo" required name="_username" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">
+        </div>
+
+        <div class="form-group">
+
+
+            <button type="submit" class="btn btn-success">Connexion</button>
+        </div>
+        </form>
+    <a href="{{ path ('user_register') }}"><button class="btn btn-success">Inscription</button></a>
+    <br>
+    <br>
+    <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+    <label for="remember_me">Se souvenir de moi</label>
+
+            </div>
+
+
+{% endblock %}

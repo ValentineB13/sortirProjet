@@ -1,0 +1,125 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <div class="card" id="userCo" align="center" xmlns="http://www.w3.org/1999/html">
+        Date du jour : {{ "now" | date('d/m/Y') }}
+        <br>
+        Participant : {{ app.user.pseudo }}
+
+
+            <div class="alert alert-success alert-dismissible">
+                Vous êtes connecté !
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+
+    </div>
+
+
+
+    {% endif %}
+    <br>
+    <div class="card">
+        <h4>Filtrer les sorties</h4>
+
+        {% include 'default/search.html.twig' with {form: form} only %}
+
+    </div>
+
+
+
+
+    {# afficher le formulaire pour filtrer les sorties #}
+    {# afficher un tableau avec la liste des sorties #}
+
+    <br>
+    <br>
+
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Nom de la sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">Inscrits/places</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+
+            <th>
+            </th>
+            <th scope="col">Action</th>
+            <th></th>
+        </tr>
+        </thead>
+        {% for sortie in sortie %}
+        <tbody>
+        <tr class="table-secondary">
+            <th scope="row">{{ sortie.nom }}</th>
+            <td>{{ sortie.dateDebut | date ('d/m/Y') }}</td>
+            <td>{{ sortie.dateCloture | date ('d/m/Y') }}</td>
+            <td>{{ sortie.membresInscrits | length }}/ {{ sortie.nbInscriptionsMax }}</td>
+            <td> {{ sortie.etat.libelle }}</td>
+            <td>   {# Une croix est placée dans cette colonne si l'utilsateur est inscrit à la sortie. #}
+                {% if sortie.membresInscrits is same as (user) %}
+                    Organisateur
+                {% endif %}
+                {% if not (sortie.membresInscrits |length is same as (0)) %}
+                    {% for membreInscrit in sortie.membresInscrits %}
+                        {% if membreInscrit is same as (user) %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}</td>
+            <td>{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a href="{{ path ('afficherOrganisateur', {'id' : sortie.id }) }}">{{ sortie.organisateur.nom  | upper}} {{ sortie.organisateur.prenom }}</a>
+            {% else %}{{ sortie.organisateur.nom  | upper}} {{ sortie.organisateur.prenom }}</td>{% endif %}
+
+            <td>{% if app.user not in sortie.membresInscrits and sortie.membresInscrits|length < sortie.nbInscriptionsMax and date('now') < sortie.dateCloture %}
+                    <a href="{{ path('inscription_sortie', {'id': sortie.id})}}">S'inscrire</a>
+                {% else %}
+                {% if app.user in sortie.membresInscrits %}
+                  <a href="{{ path('desister', {'id': sortie.id})}}" id="desinscrire">Se désinscrire</a>
+                {% endif %}
+
+                {% endif %}
+
+            <td>{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}{% if sortie.organisateur is same as (user) %}
+                <a href="{{ path ('modifierSortie' , {'id': sortie.id }) }}">Modifier</a> --
+                <a href="{{ path ('sortie_cancel', {'id' : sortie.id }) }}">Annuler</a>
+                    {% else %}
+                        <a href="{{ path('afficher_sortie', {'id': sortie.id}) }}">Afficher</a>
+                {% endif %}
+                {% endif %}
+
+                {# Si l'utilisateur N'est PAS l'organisateur de la sortie :
+                {% set inscrit = false %}
+                {% for membreInscrit in sortie.membresInscrits %}
+                    {% if membreInscrit is same as (user) %}      {# On cherche si l'utilisateur est dans la liste des participants inscrits.
+                        {% set inscrit = true %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if inscrit %}      {# Si l'utilisateur est inscrit, l'option 'se désister' apparaît.
+                <a href="{{ path('afficher_sortie', {'id': sortie.id}) }}">Afficher</a> -- <a
+                        href="#">Se désister</a>
+                {% endif %}
+                    <br>
+
+                {% if (sortie.nbInscriptionsMax <= sortie.membresInscrits|length) or (sortie.dateCloture > "now"|date("Y-m-d")) %}
+
+                <a href="{{ path ('afficher_sortie', {'id' : sortie.id }) }}">Afficher</a> --
+            <a href="{{ path ('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>{% endif %}
+            </td>
+        </tr>#}
+
+
+
+        </tbody>
+        {% endfor %}
+    </table>
+
+    <a href="{{ path('create_sortie') }}"><button type="submit" class="btn btn-primary btn-lg">Créer une nouvelle sortie</button></a>
+
+
+{% endblock %}

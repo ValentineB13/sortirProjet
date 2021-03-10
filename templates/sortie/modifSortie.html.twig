@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <br>
+    <br>
+    <h2 style="text-align: center">Modifier la sortie : {{ sortie.nom }}</h2>
+    <br>
+    <br>
+
+    {{ form_start(sortieForm) }}
+    {{ form_widget(sortieForm) }}
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(sortieForm) }}
+
+{% endblock %}

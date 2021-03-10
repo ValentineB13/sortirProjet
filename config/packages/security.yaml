@@ -1,0 +1,41 @@
+security:
+
+    providers:
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: pseudo
+
+    firewalls:
+        main:
+            pattern: ^/
+            provider: our_db_provider
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+                #logout_on_user_change: true
+            logout:
+                path: logout
+                target: home
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+
+    encoders:
+        App\Entity\User:
+            algorithm : bcrypt
+
+    access_control:
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/profil, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_PARTICIPANT: ROLE_USER
+        ROLE_ORGANISATEUR: ROLE_PARTICIPANT
+        ROLE_ADMIN: ROLE_ORGANISATEUR

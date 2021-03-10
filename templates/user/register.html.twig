@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <br>
+    <br>
+    <h2 style="text-align: center">Créer son compte</h2>
+    <br>
+    <br>
+    {{ form_start(registerForm) }}
+    {{ form_widget(registerForm) }}
+    <button type="submit">Valider</button>
+    {{ form_end(registerForm) }}
+{% endblock %}
+
+{% block title %} Registration {% endblock %}
